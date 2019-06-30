@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
-	"source": "noise_fbm",
+	"source": "noise_perlin_time",
 	"scripts": {
 		"start": "webpack-dev-server --config ./config/devServer.config.js",
 		"build": "webpack-cli --config ./config/build.config.js --env.production=true"
