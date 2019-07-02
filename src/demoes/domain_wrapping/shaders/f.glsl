@@ -85,7 +85,7 @@ mat3 scale(float s){
 
 void main(){
 	vec2 st=v_position;
-	vec3 p=vec3((st-.5)*10.,1.)*rotate(.2*u_time)*scale(sin(u_time))-vec3(u_time,0.2*sin(u_time),u_time);
+	vec3 p=vec3((st-.5)*10.,1.)*rotate(.2*u_time)-vec3(u_time,0.2*sin(u_time),u_time);
 	vec3 color=vec3(
 		fbm_time(
 			p+fbm_time(
