@@ -60,20 +60,49 @@ float noise_perlin(vec3 p){
     u.z);
 }
 float fbm_time(vec3 p){
-    float f=noise_perlin(p);
-    for(int i=0;i<5;i++){
-        float j=2.*float(i+1);
-        f+=noise_perlin(p*j)/j;
-    };
-    return f;
+	float f=noise_perlin(p);
+	for(int i=0;i<1;i++){
+		float j=2.*float(i+1);
+		f+=noise_perlin(p*j)/j;
+	};
+	return f;
 }
+
+mat3 rotate(float a){
+	return mat3(
+		cos(a),-sin(a),0,
+		sin(a),cos(a),0,
+		0,0,1
+	);
+}
+mat3 scale(float s){
+	return mat3(
+		1,0,0,
+		0,1,0,
+		s,s,1
+	);
+}
+
 void main(){
-    vec2 st=v_position;
-    vec3 color=vec3(
-        noise_perlin(vec3(st*15.,u_time)+u_time)
-    );
-    vec2 offset=(st-vec2(5.))/u_tex1_size;
-    vec4 tex1_color=texture2D(u_tex1,st+offset*color.r);
-    gl_FragColor=tex1_color+vec4(vec3(.7,.5*color.r,0.)*abs(color.r),1.);
-    // gl_FragColor=vec4(vec3(color.r,0.,0.)*abs(color.r),1.);
+	vec2 st=v_position;
+	vec3 p=vec3((st-.5)*10.,1.)*rotate(.2*u_time)-vec3(u_time,0.2*sin(u_time),u_time);
+	vec3 color=vec3(
+		fbm_time(
+			p+fbm_time(
+				p+fbm_time(p)
+			)
+		)
+	);
+	color = smoothstep(.0, 1.,color);
+	vec2 offset=(vec2(.5))*115./u_tex1_size;
+	vec4 tex1_color=texture2D(u_tex1,st+offset*color.r);
+	// gl_FragColor=mix(
+	// 	tex1_color,
+	// 	vec4(
+	// 		tex1_color.rgb*.2,
+	// 		1.
+	// 	),
+	// 	(1.-color.r)
+	// )+vec4(color,0.);
+	gl_FragColor=vec4(color,1.);
 }
