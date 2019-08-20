@@ -17,14 +17,13 @@ vec2 random(vec2 p){
 }
 void main(){
     vec2 st = a_position/u_resolution;
-    st-=0.5;
-    st*=vec2(1.,-1.);
     st*=sin(u_process*PI)*random(st)+1.;
     if(u_process>0.5){
         st.x+=.5*(u_process-.5)/.5;
     }
-    
+    st=2.*st-1.;
+    st*=vec2(1.,-1.);
     v_position = st;
-    gl_PointSize = u_size-5.*sin(u_process*PI);
+    gl_PointSize = u_size-8.*sin(u_process*PI);
     gl_Position = vec4(st,0.,1.);
 }

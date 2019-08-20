@@ -12,7 +12,7 @@ const h = 300 * window.devicePixelRatio;
 const rectSize = 100*window.devicePixelRatio;
 
 const program = glUtl.createProgram(gl, vss, fss);
-const points = new Float32Array(createRect(0,0,300,300,30));
+const points = new Float32Array(createRect(50,50,200,200,20));
 const bty = points.BYTES_PER_ELEMENT;
 const buf = glUtl.createArrayBuffer(gl, points);
 const uProcess = gl.getUniformLocation(program,'u_process');
