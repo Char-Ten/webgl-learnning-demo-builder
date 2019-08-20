@@ -12,12 +12,7 @@ const h = 300 * window.devicePixelRatio;
 const rectSize = 100*window.devicePixelRatio;
 
 const program = glUtl.createProgram(gl, vss, fss);
-const points = new Float32Array([
-    0,0,
-    rectSize,0,
-    rectSize,rectSize,
-    0,rectSize
-]);
+const points = new Float32Array(createRect(0,0,300,300,30));
 const bty = points.BYTES_PER_ELEMENT;
 const buf = glUtl.createArrayBuffer(gl, points);
 const uProcess = gl.getUniformLocation(program,'u_process');
@@ -37,7 +32,7 @@ process.addEventListener("input",e=>{
     let target = <HTMLInputElement>e.target;
     let value = parseFloat(target.value);
     gl.uniform1f(uProcess,value);
-    gl.drawArrays(gl.POINTS, 0, 4);
+    gl.drawArrays(gl.POINTS, 0, points.length/2);
 });
 
 glUtl.setProgramAttribute(gl, program, {
@@ -58,10 +53,26 @@ glUtl.setProgramUniform(gl, program, {
     },
     u_size:{
         type:"float",
-        value:[rectSize/2]
+        value:[10]
     }
 });
-
 gl.viewport(0, 0, w, h);
-gl.drawArrays(gl.POINTS, 0, 4);
+gl.drawArrays(gl.POINTS, 0, points.length/2);
+
+function createRect(x:number,y:number,w:number,h:number,size:number){
+    let a = [];
+    for(let i=0;i<size;i++){
+        for(let j=0;j<size;j++){
+            a.push(
+                x+i*w/size,
+                y+j*h/size
+            )
+        }
+    }
+    return a
+}
+
+console.log(
+    createRect(0,0,100,100,5)
+)
 
