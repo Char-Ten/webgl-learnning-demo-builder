@@ -60,7 +60,7 @@
 		"url-loader": "^1.1.2",
 		"webgl-dev-utils": "^0.0.2",
 		"webpack": "4.28.3",
-		"webpack-cli": "^3.3.2",
+		"webpack-cli": "^3.3.12",
 		"webpack-dev-server": "^3.4.1"
 	},
 	"babel": {
